@@ -1,0 +1,19 @@
+services:
+  vinyl-planner:
+    build: .
+    image: vinyl-facet-planner:latest
+    container_name: vinyl-facet-planner
+    ports:
+      - "3000:3000"
+    volumes:
+      - vinyl-data:/data
+    environment:
+      # SQLite 数据库文件位置（位于命名卷中，持久化保存）
+      DB_PATH: /data/vinyl.db
+      PORT: "3000"
+      # 首次启动且库为空时自动写入示例方案；设为 0 可关闭
+      SEED_SAMPLE: "1"
+    restart: unless-stopped
+
+volumes:
+  vinyl-data:
